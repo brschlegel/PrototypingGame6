@@ -65,11 +65,33 @@ public class Paint : MonoBehaviour
 
     private void BrushAreaWithColor(Vector2 pixelUV, Color color, int size)
     {
-        for (int x = -size; x < size; x++)
+        for (int x = -size; x < 1; x++)
         {
-            for (int y = -size; y < size; y++)
+            int newX = (int)pixelUV.x + x;
+            if (newX > -1 && newX < 1501) {
+                for (int y = -size - x; y < size + x + 1; y++)
+                {
+                    int newY = (int)pixelUV.y + y;
+                    if (newY > -1 && newY < 2001)
+                    {
+                        Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                    }
+                }
+            }
+        }
+        for(int x = 1; x < size + 1; x++)
+        {
+            int newX = (int)pixelUV.x + x;
+            if (newX > -1 && newX < 1501)
             {
-                Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                for (int y = -size + x; y < size - x + 1; y++)
+                {
+                    int newY = (int)pixelUV.y + y;
+                    if (newY > -1 && newY < 2001)
+                    {
+                        Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                    }
+                }
             }
         }
 
