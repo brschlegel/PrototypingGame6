@@ -99,12 +99,12 @@ public class Paint : MonoBehaviour
             //int newX = (int)pixelUV.x + x;
             int maxY = (int)(Mathf.Sin((x + size) * Mathf.PI / (2 * size)) * size);
             int newX = (int)pixelUV.x + x;
-            if (newX > -1 && newX < 1501)
+            if (newX > -1 && newX < 1500)
             {
                 for (int y = -maxY; y < maxY + 1; y++)
                 {
                     int newY = (int)pixelUV.y + y;
-                    if (newY > -1 && newY < 2001)
+                    if (newY > -1 && newY < 2000)
                     {
                         Drawing.Texture.SetPixel(newX, newY, color);
                     }
