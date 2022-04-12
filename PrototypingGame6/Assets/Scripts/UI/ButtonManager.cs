@@ -17,7 +17,7 @@ public class ButtonManager : MonoBehaviour
     {
         Debug.Log("Clicked Start");
         Time.timeScale = 1;
-        SceneManager.LoadScene("KatScene"); // Change this later
+        SceneManager.LoadScene("InfoScene");
     }
 
     public void OnResume()
