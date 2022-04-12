@@ -97,7 +97,7 @@ public class Paint : MonoBehaviour
         for (int x = -size; x < size + 1; x++)
         {
             //int newX = (int)pixelUV.x + x;
-            int maxY = 2 + (int)(Mathf.Sin((x + size) * Mathf.PI / (2 * size)) * size);
+            int maxY = (int)(Mathf.Sin((x + size) * Mathf.PI / (2 * size)) * size);
             int newX = (int)pixelUV.x + x;
             if (newX > -1 && newX < 1500)
             {
