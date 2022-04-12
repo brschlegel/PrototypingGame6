@@ -6,6 +6,7 @@ using System.IO;
 public static class PaintingData
 {
     //Theres probably a more elegant solution here with a dictionary of strings or something but eh we chillin
+    //Update: we were not chillin, ended up changing it lol
 
 
     public static Dictionary<string, List<string>> data = 
@@ -20,7 +21,7 @@ public static class PaintingData
 
     public static void SetScore()
     {
-        score = Random.Range(0, 101);
+        score = Random.Range(0, 102);
     }
 
     public static void LogColor(string c)
