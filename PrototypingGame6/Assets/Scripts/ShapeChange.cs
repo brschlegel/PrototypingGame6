@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrushSize : MonoBehaviour
+public class ShapeChange : MonoBehaviour
 {
-
-    public int brushSize;
+    public Shape shape;
 
     // Update is called once per frame
     void Update()
@@ -15,10 +14,10 @@ public class BrushSize : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                BrushSize bSize = hit.collider.GetComponent<BrushSize>();
-                if (bSize != null && bSize.brushSize == brushSize)
+                ShapeChange shapeChange = hit.collider.GetComponent<ShapeChange>();
+                if (shapeChange != null && shapeChange.shape == shape)
                 {
-                    Paint.SetBrushSize(brushSize);
+                    Paint.brushShape = shape;
                 }
             }
         }

@@ -6,12 +6,21 @@ using UnityEngine;
 /// Much of the below code taken from or inspired by https://unity3d.college/2017/07/22/build-unity-multiplayer-drawing-game-using-unet-unity3d/
 /// </summary>
 
+public enum Shape
+{
+    Circle,
+    Square,
+    Diamond
+}
+
 public class Paint : MonoBehaviour
 {
     public static int brushSize;
+    private static int brushSizeSquared;
+    public static Shape brushShape;
     private void Start()
     {
-        brushSize = 10;
+        SetBrushSize(10);
         //var data = Drawing.GetAllTextureData();
         //var zippeddata = data.Compress();
 
@@ -46,10 +55,16 @@ public class Paint : MonoBehaviour
                     pixelUV.y *= tex.height;
 
                     //CmdBrushAreaWithColorOnServer(pixelUV, ColorPicker.SelectedColor, 1f);
-                    BrushAreaWithColor(pixelUV, ColorPicker.SelectedColor, brushSize);
+                    BrushAreaWithColor(pixelUV, ColorPicker.SelectedColor, brushSize, brushSizeSquared);
                 }
             }
         }
+    }
+
+    public static void SetBrushSize(int size)
+    {
+        brushSize = size;
+        brushSizeSquared = size * size;
     }
 
     //private void CmdBrushAreaWithColorOnServer(Vector2 pixelUV, Color color, int size)
@@ -63,55 +78,80 @@ public class Paint : MonoBehaviour
     //    BrushAreaWithColor(pixelUV, color, size);
     //}
 
-    private void BrushAreaWithColor(Vector2 pixelUV, Color color, int size)
+    private void BrushAreaWithColor(Vector2 pixelUV, Color color, int size, int sizeSqr)
     {
-        /*for (int x = -size; x < 1; x++)
+        switch (brushShape)
         {
-            int newX = (int)pixelUV.x + x;
-            if (newX > -1 && newX < 1501) {
-                for (int y = -size - x; y < size + x + 1; y++)
+            case Shape.Circle:
+                for (int x = -size; x < size + 1; x++)
                 {
-                    int newY = (int)pixelUV.y + y;
-                    if (newY > -1 && newY < 2001)
+                    //int newX = (int)pixelUV.x + x;
+                    int maxY = (int)Mathf.Sqrt(brushSizeSquared - (x * x));
+                    int newX = (int)pixelUV.x + x;
+                    if (newX > -1 && newX < 1500)
                     {
-                        Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                        for (int y = -maxY; y < maxY + 1; y++)
+                        {
+                            int newY = (int)pixelUV.y + y;
+                            if (newY > -1 && newY < 2000)
+                            {
+                                Drawing.Texture.SetPixel(newX, newY, color);
+                            }
+                        }
                     }
                 }
-            }
+                break;
+            case Shape.Diamond:
+                for (int x = -size; x < 1; x++)
+                {
+                    int newX = (int)pixelUV.x + x;
+                    if (newX > -1 && newX < 1501) {
+                        for (int y = -size - x; y < size + x + 1; y++)
+                        {
+                            int newY = (int)pixelUV.y + y;
+                            if (newY > -1 && newY < 2001)
+                            {
+                                Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                            }
+                        }
+                    }
+                }
+                for(int x = 1; x < size + 1; x++)
+                {
+                    int newX = (int)pixelUV.x + x;
+                    if (newX > -1 && newX < 1501)
+                    {
+                        for (int y = -size + x; y < size - x + 1; y++)
+                        {
+                            int newY = (int)pixelUV.y + y;
+                            if (newY > -1 && newY < 2001)
+                            {
+                                Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                            }
+                        }
+                    }
+                }
+                break;
+            case Shape.Square:
+                for (int x = -size; x < size + 1; x++)
+                {
+                    int newX = (int)pixelUV.x + x;
+                    if (newX > -1 && newX < 1500)
+                    {
+                        for (int y = -size; y < size + 1; y++)
+                        {
+                            int newY = (int)pixelUV.y + y;
+                            if (newY > -1 && newY < 2000)
+                            {
+                                Drawing.Texture.SetPixel(newX, newY, color);
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
         }
-        for(int x = 1; x < size + 1; x++)
-        {
-            int newX = (int)pixelUV.x + x;
-            if (newX > -1 && newX < 1501)
-            {
-                for (int y = -size + x; y < size - x + 1; y++)
-                {
-                    int newY = (int)pixelUV.y + y;
-                    if (newY > -1 && newY < 2001)
-                    {
-                        Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
-                    }
-                }
-            }
-        }*/
-        for (int x = -size; x < size + 1; x++)
-        {
-            //int newX = (int)pixelUV.x + x;
-            int maxY = (int)(Mathf.Sin((x + size) * Mathf.PI / (2 * size)) * size);
-            int newX = (int)pixelUV.x + x;
-            if (newX > -1 && newX < 1500)
-            {
-                for (int y = -maxY; y < maxY + 1; y++)
-                {
-                    int newY = (int)pixelUV.y + y;
-                    if (newY > -1 && newY < 2000)
-                    {
-                        Drawing.Texture.SetPixel(newX, newY, color);
-                    }
-                }
-            }
-        }
-
         Drawing.Texture.Apply();
     }
 }
