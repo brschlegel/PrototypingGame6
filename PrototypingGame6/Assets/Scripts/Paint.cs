@@ -20,6 +20,11 @@ public class Paint : MonoBehaviour
     public static Shape brushShape;
     public static Dictionary<string, int> colorQuantities;
     int pixelsToAdd;
+
+    [SerializeField]
+    private FeedbackGenerator feedbackGenerator;
+
+    private bool currentlyDrawing;
     private void Start()
     {
         SetBrushSize(10);
@@ -40,6 +45,7 @@ public class Paint : MonoBehaviour
 
     private void Update()
     {
+        currentlyDrawing = false;
         if (Input.GetKey(KeyCode.Mouse0))
         {
             RaycastHit hit;
@@ -48,6 +54,7 @@ public class Paint : MonoBehaviour
                 Drawing drawing = hit.collider.GetComponent<Drawing>();
                 if (drawing != null)
                 {
+                    currentlyDrawing = true;
                     Renderer rend = hit.transform.GetComponent<Renderer>();
                     MeshCollider meshCollider = hit.collider as MeshCollider;
 
@@ -236,5 +243,17 @@ public class Paint : MonoBehaviour
         }
         Drawing.Texture.Apply();
         return totalPixels;
+    }
+
+    private IEnumerator RequestFeedback()
+    {
+        while(gameObject.activeSelf)
+        {
+            if(currentlyDrawing)
+            {
+               // feedbackGenerator.GenerateFeedback(, )
+            }
+            yield return new WaitForSeconds(2);
+        }
     }
 }

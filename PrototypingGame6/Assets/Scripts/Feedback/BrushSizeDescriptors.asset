@@ -15,10 +15,18 @@ MonoBehaviour:
   positivePredicates:
   - The {0} strokes show forethought and confidence
   - I love the {0} strokes, the size is perfect
-  neutralPredicates: []
-  negativePredicates: []
+  neutralPredicates:
+  - The artist's use of {0} brush strokes is amateurish
+  - 'Using a {0} sized brush is decent '
+  negativePredicates:
+  - Really? They used a {0} brush?
+  - Wow. Uninspired. A {0} brush?
   positiveAfterThought:
   - . Truly the work of an expert
   - . Simply incredible.
-  neutralAfterThought: []
-  negativeAfterThought: []
+  neutralAfterThought:
+  - ', a {1} brush would help with the overall composition'
+  - . {1} strokes would be better.
+  negativeAfterThought:
+  - Clearly the right choice was a {1} brush.
+  - I shouldn't even have to say to use a {1} brush
