@@ -9,13 +9,30 @@ using UnityEngine;
 public class ColorPicker : MonoBehaviour
 {
     public static Color SelectedColor { get; set; }
+    private bool clicking;
 
     [SerializeField]
     private Renderer selectedColorPreview;
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                ColorPicker picker = hit.collider.GetComponent<ColorPicker>();
+                if (picker != null)
+                {
+                    clicking = true;
+                }
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            clicking = false;
+        }
+        if (clicking && Input.GetKey(KeyCode.Mouse0))
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))

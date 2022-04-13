@@ -85,7 +85,6 @@ public class Paint : MonoBehaviour
             case Shape.Circle:
                 for (int x = -size; x < size + 1; x++)
                 {
-                    //int newX = (int)pixelUV.x + x;
                     int maxY = (int)Mathf.Sqrt(brushSizeSquared - (x * x));
                     int newX = (int)pixelUV.x + x;
                     if (newX > -1 && newX < 1500)
@@ -111,7 +110,7 @@ public class Paint : MonoBehaviour
                             int newY = (int)pixelUV.y + y;
                             if (newY > -1 && newY < 2001)
                             {
-                                Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                                Drawing.Texture.SetPixel(newX, newY, color);
                             }
                         }
                     }
@@ -126,7 +125,7 @@ public class Paint : MonoBehaviour
                             int newY = (int)pixelUV.y + y;
                             if (newY > -1 && newY < 2001)
                             {
-                                Drawing.Texture.SetPixel((int)pixelUV.x + x, (int)pixelUV.y + y, color);
+                                Drawing.Texture.SetPixel(newX, newY, color);
                             }
                         }
                     }
