@@ -63,25 +63,23 @@ public class Paint : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0) && pixelsToAdd > 0)
+        /*else if (Input.GetKeyUp(KeyCode.Mouse0) && pixelsToAdd > 0)
         {
             AddToQuantities();
-        }
+        }*/
     }
 
-    private void AddToQuantities()
+    private string ColorToString()
     {
         Color c = ColorPicker.SelectedColor;
         float domColor = Mathf.Max(new float[] { c.r, c.g, c.b });
         if (domColor < .15f)
         {
-            colorQuantities["Black"] += pixelsToAdd;
-            Debug.Log("Black");
+            return "Black";
         }
         else if(c.r > .75f && c.g > .75f && c.b > .75f)
         {
-            colorQuantities["LightColor"] += pixelsToAdd;
-            Debug.Log("LightColor");
+            return "LightColor";
         }
         else
         {
@@ -89,63 +87,53 @@ public class Paint : MonoBehaviour
             {
                 if (c.b > c.g && c.b * 2.5f > c.r)
                 {
-                    colorQuantities["Pink"] += pixelsToAdd;
-                    Debug.Log("Pink");
+                    return "Pink";
                 }
                 else if (c.g * 2.5f > c.r && c.g * 1.25f < c.r && c.b * 2f < c.r)
                 {
-                    colorQuantities["Orange"] += pixelsToAdd;
-                    Debug.Log("Orange");
+                    return "Orange";
                 }
                 else if (c.g * 1.25f > c.r && c.b * 2f < c.r)
                 {
-                    colorQuantities["Yellow"] += pixelsToAdd;
-                    Debug.Log("Yellow");
+                    return "Yellow";
                 }
                 else
                 {
-                    colorQuantities["Red"] += pixelsToAdd;
-                    Debug.Log("Red");
+                    return "Red";
                 }
             }
             else if (c.g == domColor)
             {
                 if (c.r * 1.25f > c.g && c.b * 2f < c.g)
                 {
-                    colorQuantities["Yellow"] += pixelsToAdd;
-                    Debug.Log("Yellow");
+                    return "Yellow";
                 }
                 else if(c.b * 1.25f > c.g)
                 {
-                    colorQuantities["Blue"] += pixelsToAdd;
-                    Debug.Log("Blue");
+                    return "Blue";
                 }
                 else
                 {
-                    colorQuantities["Green"] += pixelsToAdd;
-                    Debug.Log("Green");
+                    return "Green";
                 }
             }
             else
             {
                 if(c.r * 2f > c.b && c.r * 1.2f < c.b && c.g * 1.25f < c.b)
                 {
-                    colorQuantities["Purple"] += pixelsToAdd;
-                    Debug.Log("Purple");
+                    return "Purple";
                 }
                 else if(c.r > c.g && c.r * 1.2f > c.b)
                 {
-                    colorQuantities["Pink"] += pixelsToAdd;
-                    Debug.Log("Pink");
+                    return "Pink";
                 }
                 else
                 {
-                    colorQuantities["Blue"] += pixelsToAdd;
-                    Debug.Log("Blue");
+                    return "Blue";
                 }
             }
         }
-        pixelsToAdd = 0;
+        //pixelsToAdd = 0;
 
     }
 
