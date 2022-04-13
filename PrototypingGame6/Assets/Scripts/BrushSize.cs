@@ -18,7 +18,7 @@ public class BrushSize : MonoBehaviour
                 BrushSize bSize = hit.collider.GetComponent<BrushSize>();
                 if (bSize != null && bSize.brushSize == brushSize)
                 {
-                    Paint.brushSize = brushSize;
+                    Paint.SetBrushSize(brushSize);
                 }
             }
         }
