@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Much of the below code taken from or inspired by https://unity3d.college/2017/07/22/build-unity-multiplayer-drawing-game-using-unet-unity3d/
+/// Some of the below code taken from or inspired by https://unity3d.college/2017/07/22/build-unity-multiplayer-drawing-game-using-unet-unity3d/
 /// </summary>
 
 public enum Shape
@@ -18,23 +18,28 @@ public class Paint : MonoBehaviour
     public static int brushSize;
     private static int brushSizeSquared;
     public static Shape brushShape;
+    public static Dictionary<string, int> colorQuantities;
+    int pixelsToAdd;
     private void Start()
     {
         SetBrushSize(10);
-        //var data = Drawing.GetAllTextureData();
-        //var zippeddata = data.Compress();
-
-        //RpcSendFullTexture(zippeddata);
+        colorQuantities = new Dictionary<string, int>()
+        {
+            {"LightColor", 0}, //All values above .75
+            {"Black", 0}, //All values are below .15
+            {"Blue", 0},  //Blue dominant and nothing else comes close
+            {"Red", 0},   //Red dominant and nothing else comes close
+            {"Green", 0}, //Green dominant and nothing else comes close, if more than 80 percent blue then is blue
+            {"Yellow", 0}, //Red dominant AND more than 80 percent green AND less than 50 percent blue OR the same but with red and green flipped
+            {"Purple", 0}, //Blue dominant AND more than 50 percent red AND less than 83 percent red AND less than 80 percent green
+            {"Orange", 0}, //Red dominant AND more than 40 percent green AND less than 80 percent green AND less than 50 percent blue
+            {"Pink", 0}     //Red dominant AND more than 40 percent blue OR Blue dominant but more than 83 percent red (green must be the least dominant)
+        };
     }
 
-    //private void RpcSendFullTexture(byte[] textureData)
-    //{
-    //    Drawing.SetAllTextureData(textureData.Decompress());
-    //}
 
     private void Update()
     {
-        Debug.Log(brushSize);
         if (Input.GetKey(KeyCode.Mouse0))
         {
             RaycastHit hit;
@@ -54,11 +59,94 @@ public class Paint : MonoBehaviour
                     pixelUV.x *= tex.width;
                     pixelUV.y *= tex.height;
 
-                    //CmdBrushAreaWithColorOnServer(pixelUV, ColorPicker.SelectedColor, 1f);
-                    BrushAreaWithColor(pixelUV, ColorPicker.SelectedColor, brushSize, brushSizeSquared);
+                    pixelsToAdd += BrushAreaWithColor(pixelUV, ColorPicker.SelectedColor, brushSize, brushSizeSquared);
                 }
             }
         }
+        else if (Input.GetKeyUp(KeyCode.Mouse0) && pixelsToAdd > 0)
+        {
+            AddToQuantities();
+        }
+    }
+
+    private void AddToQuantities()
+    {
+        Color c = ColorPicker.SelectedColor;
+        float domColor = Mathf.Max(new float[] { c.r, c.g, c.b });
+        if (domColor < .15f)
+        {
+            colorQuantities["Black"] += pixelsToAdd;
+            Debug.Log("Black");
+        }
+        else if(c.r > .75f && c.g > .75f && c.b > .75f)
+        {
+            colorQuantities["LightColor"] += pixelsToAdd;
+            Debug.Log("LightColor");
+        }
+        else
+        {
+            if (c.r == domColor)
+            {
+                if (c.b > c.g && c.b * 2.5f > c.r)
+                {
+                    colorQuantities["Pink"] += pixelsToAdd;
+                    Debug.Log("Pink");
+                }
+                else if (c.g * 2.5f > c.r && c.g * 1.25f < c.r && c.b * 2f < c.r)
+                {
+                    colorQuantities["Orange"] += pixelsToAdd;
+                    Debug.Log("Orange");
+                }
+                else if (c.g * 1.25f > c.r && c.b * 2f < c.r)
+                {
+                    colorQuantities["Yellow"] += pixelsToAdd;
+                    Debug.Log("Yellow");
+                }
+                else
+                {
+                    colorQuantities["Red"] += pixelsToAdd;
+                    Debug.Log("Red");
+                }
+            }
+            else if (c.g == domColor)
+            {
+                if (c.r * 1.25f > c.g && c.b * 2f < c.g)
+                {
+                    colorQuantities["Yellow"] += pixelsToAdd;
+                    Debug.Log("Yellow");
+                }
+                else if(c.b * 1.25f > c.g)
+                {
+                    colorQuantities["Blue"] += pixelsToAdd;
+                    Debug.Log("Blue");
+                }
+                else
+                {
+                    colorQuantities["Green"] += pixelsToAdd;
+                    Debug.Log("Green");
+                }
+            }
+            else
+            {
+                if(c.r * 2f > c.b && c.r * 1.2f < c.b && c.g * 1.25f < c.b)
+                {
+                    colorQuantities["Purple"] += pixelsToAdd;
+                    Debug.Log("Purple");
+                }
+                else if(c.r > c.g && c.r * 1.2f > c.b)
+                {
+                    colorQuantities["Pink"] += pixelsToAdd;
+                    Debug.Log("Pink");
+                }
+                else
+                {
+                    colorQuantities["Blue"] += pixelsToAdd;
+                    Debug.Log("Blue");
+                }
+            }
+        }
+        pixelsToAdd = 0;
+
     }
 
     public static void SetBrushSize(int size)
@@ -67,19 +155,10 @@ public class Paint : MonoBehaviour
         brushSizeSquared = size * size;
     }
 
-    //private void CmdBrushAreaWithColorOnServer(Vector2 pixelUV, Color color, int size)
-    //{
-    //    RpcBrushAreaWithColorOnClients(pixelUV, color, size);
-    //    BrushAreaWithColor(pixelUV, color, size);
-    //}
 
-    //private void RpcBrushAreaWithColorOnClients(Vector2 pixelUV, Color color, int size)
-    //{
-    //    BrushAreaWithColor(pixelUV, color, size);
-    //}
-
-    private void BrushAreaWithColor(Vector2 pixelUV, Color color, int size, int sizeSqr)
+    private int BrushAreaWithColor(Vector2 pixelUV, Color color, int size, int sizeSqr)
     {
+        int totalPixels = 0;
         switch (brushShape)
         {
             case Shape.Circle:
@@ -95,6 +174,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2000)
                             {
                                 Drawing.Texture.SetPixel(newX, newY, color);
+                                totalPixels++;
                             }
                         }
                     }
@@ -111,6 +191,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2001)
                             {
                                 Drawing.Texture.SetPixel(newX, newY, color);
+                                totalPixels++;
                             }
                         }
                     }
@@ -126,6 +207,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2001)
                             {
                                 Drawing.Texture.SetPixel(newX, newY, color);
+                                totalPixels++;
                             }
                         }
                     }
@@ -143,6 +225,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2000)
                             {
                                 Drawing.Texture.SetPixel(newX, newY, color);
+                                totalPixels++;
                             }
                         }
                     }
@@ -152,5 +235,6 @@ public class Paint : MonoBehaviour
                 break;
         }
         Drawing.Texture.Apply();
+        return totalPixels;
     }
 }
