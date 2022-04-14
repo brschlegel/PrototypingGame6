@@ -30,7 +30,7 @@ public class BeginButton : MonoBehaviour
 
     public void GoToGame()
     {
-        SceneManager.LoadScene("DrawingScene");
+        SceneManager.LoadScene("JulienScene");
     }
 
 }

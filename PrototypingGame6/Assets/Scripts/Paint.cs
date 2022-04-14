@@ -247,7 +247,7 @@ public class Paint : MonoBehaviour
                 PaintingData.SetScore();
                  feedbackText.text = feedbackGenerator.GenerateFeedback(ColorToString(), BrushSizeToString(brushSize), brushShape.ToString());
             }
-            yield return new WaitForSeconds(Random.Range(3,10));
+            yield return new WaitForSeconds(Random.Range(2,6));
         }
     }
 
