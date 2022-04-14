@@ -28,5 +28,5 @@ MonoBehaviour:
   - ', a {1} brush would help with the overall composition'
   - . {1} strokes would be better.
   negativeAfterThought:
-  - Clearly the right choice was a {1} brush.
-  - I shouldn't even have to say to use a {1} brush
+  - ' Clearly the right choice was a {1} brush.'
+  - ' I shouldn''t even have to say to use a {1} brush'

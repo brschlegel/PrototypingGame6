@@ -23,11 +23,7 @@ public class FeedbackGenerator : MonoBehaviour
     private Descriptors brushTypeDescriptors;
     private void Start()
     {
-        PaintingData.SetScore();
-        PaintingData.RandomTests(4);
-        PopulateSubjectData();
-        Debug.Log(GenerateFeedback());
-        Debug.Log(GenerateFeedback());
+
     }
 
     public void PopulateSubjectData()
@@ -37,8 +33,7 @@ public class FeedbackGenerator : MonoBehaviour
     
     public string GenerateFeedback(string color, string size, string type)
     {
-        //int rand = Random.Range(0, 3);
-        int rand = 0;
+        int rand = Random.Range(0, 3);
         string possible;
         switch(rand)
         {
@@ -79,5 +74,13 @@ public class FeedbackGenerator : MonoBehaviour
         List<string> possible = new List<string>(l);
         possible.Remove(subject);
         return possible[Random.Range(0, possible.Count)];
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit(); 
+        }
     }
 }

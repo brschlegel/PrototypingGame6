@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KatScene.unity
     guid: 1411a83fe2a0a9b478b7e369e1571d4e
+  - enabled: 1
+    path: Assets/Scenes/DrawingScene.unity
+    guid: a93eb436eb042f345a6be004ce4315ac
   m_configObjects: {}

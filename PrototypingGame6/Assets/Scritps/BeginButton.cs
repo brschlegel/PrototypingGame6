@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class BeginButton : MonoBehaviour
@@ -26,4 +27,10 @@ public class BeginButton : MonoBehaviour
         yield return new WaitForSeconds(delay);
         button.gameObject.SetActive(true);
     }
+
+    public void GoToGame()
+    {
+        SceneManager.LoadScene("DrawingScene");
+    }
+
 }

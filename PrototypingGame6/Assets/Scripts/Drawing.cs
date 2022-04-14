@@ -27,10 +27,10 @@ public class Drawing : MonoBehaviour
             }
         }
         Texture.Apply();
-        foreach(KeyValuePair<string, int> pair in Paint.colorQuantities)
-        {
-            Paint.colorQuantities[pair.Key] = 0;
-        }
+        //foreach(KeyValuePair<string, int> pair in Paint.colorQuantities)
+        //{
+        //    Paint.colorQuantities[pair.Key] = 0;
+        //}
     }
 
     public static Texture2D Texture { get; private set; }
