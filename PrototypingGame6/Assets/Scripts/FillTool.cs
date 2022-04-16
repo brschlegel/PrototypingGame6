@@ -40,6 +40,7 @@ public class FillTool : MonoBehaviour
                         while (queue.Count > 0)
                         {
                             (int, int) top = queue.Peek();
+                            Debug.Log(top);
                             FillSquare(top.Item1, top.Item2, color, changeColor);
                             queue.Dequeue();
                         }
@@ -53,11 +54,12 @@ public class FillTool : MonoBehaviour
     private void FillSquare(int x, int y, Color color, Color changeColor)
     {
         Drawing.Texture.SetPixel(x, y, color);
+        visitedBools[x, y] = true;
         if (x > 0 && !visitedBools[x - 1, y] && Drawing.Texture.GetPixel(x - 1, y) == changeColor)
         {
             queue.Enqueue((x - 1, y));
         }
-        if (x < 10 && !visitedBools[x + 1, y] && Drawing.Texture.GetPixel(x + 1, y) == changeColor)
+        if (x < 100 && !visitedBools[x + 1, y] && Drawing.Texture.GetPixel(x + 1, y) == changeColor)
         {
             queue.Enqueue((x + 1, y));
         }
@@ -65,7 +67,7 @@ public class FillTool : MonoBehaviour
         {
             queue.Enqueue((x, y - 1));
         }
-        if (y < 10 && !visitedBools[x, y + 1] && Drawing.Texture.GetPixel(x, y + 1) == changeColor)
+        if (y < 100 && !visitedBools[x, y + 1] && Drawing.Texture.GetPixel(x, y + 1) == changeColor)
         {
             queue.Enqueue((x, y + 1));
         }
