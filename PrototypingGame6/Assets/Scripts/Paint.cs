@@ -13,15 +13,25 @@ public enum Shape
     Diamond
 }
 
+public enum Actions
+{
+    Painting,
+    Eyedropping,
+    Filling
+}
+
 public class Paint : MonoBehaviour
 {
     public static int brushSize;
     private static int brushSizeSquared;
     public static Shape brushShape;
     public static Dictionary<string, int> colorQuantities;
+    public static bool isEraser;
+    public static Actions action;
     int pixelsToAdd;
     private void Start()
     {
+        action = Actions.Painting;
         SetBrushSize(10);
         colorQuantities = new Dictionary<string, int>()
         {
@@ -40,7 +50,7 @@ public class Paint : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (action == Actions.Painting && Input.GetKey(KeyCode.Mouse0))
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
@@ -49,10 +59,6 @@ public class Paint : MonoBehaviour
                 if (drawing != null)
                 {
                     Renderer rend = hit.transform.GetComponent<Renderer>();
-                    MeshCollider meshCollider = hit.collider as MeshCollider;
-
-                    if (rend == null || rend.sharedMaterial == null || rend.sharedMaterial.mainTexture == null || meshCollider == null)
-                        return;
 
                     Texture2D tex = rend.material.mainTexture as Texture2D;
                     Vector2 pixelUV = hit.textureCoord;

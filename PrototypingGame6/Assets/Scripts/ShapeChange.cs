@@ -18,6 +18,8 @@ public class ShapeChange : MonoBehaviour
                 if (shapeChange != null && shapeChange.shape == shape)
                 {
                     Paint.brushShape = shape;
+                    Paint.isEraser = false;
+                    Paint.action = Actions.Painting;
                 }
             }
         }
