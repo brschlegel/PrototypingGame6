@@ -13,7 +13,7 @@ public static class PaintingData
         new Dictionary<string, List<string>>() { {"Color", new List<string>()}, {"BrushSize", new List<string>() }, {"BrushType", new List<string>() } };
 
     public static Dictionary<string, List<string>> possibleData = new Dictionary<string, List<string>>()
-    {{"Color", new List<string>() { "Red", "Blue", "Green" }},{"BrushSize", new List<string>() { "Small", "Medium", "Large" } },{"BrushType", new List<string>() { "Square", "Circle" }} };
+    {{"Color", new List<string>() { "Red", "Blue", "Green" }},{"BrushSize", new List<string>() { "Extra Small", "Small", "Medium", "Large", "Extra Large" } },{"BrushType", new List<string>() { "Square", "Circle","Diamond" }} };
    
 
     public static int score;

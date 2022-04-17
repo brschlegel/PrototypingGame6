@@ -23,11 +23,7 @@ public class FeedbackGenerator : MonoBehaviour
     private Descriptors brushTypeDescriptors;
     private void Start()
     {
-        PaintingData.SetScore();
-        PaintingData.RandomTests(4);
-        PopulateSubjectData();
-        Debug.Log(GenerateFeedback());
-        Debug.Log(GenerateFeedback());
+
     }
 
     public void PopulateSubjectData()
@@ -35,26 +31,25 @@ public class FeedbackGenerator : MonoBehaviour
         subjectData = new Dictionary<string,List<string>>(PaintingData.data);
     }
     
-    public string GenerateFeedback()
+    public string GenerateFeedback(string color, string size, string type)
     {
         int rand = Random.Range(0, 3);
-        string subject;
         string possible;
         switch(rand)
         {
             case 0:
-                subject = subjectData["Color"][Random.Range(0, subjectData["Color"].Count)];
-                possible = PaintingData.possibleData["Color"][Random.Range(0, subjectData["Color"].Count)];
-                return GetFeedbackString(colorDescriptors, subject, possible);
+               
+                possible = GetPossible(PaintingData.possibleData["Color"], color);
+                return GetFeedbackString(colorDescriptors, color, possible);
                 
             case 1:
-                subject = subjectData["BrushSize"][Random.Range(0, subjectData["BrushSize"].Count)];
-                possible = PaintingData.possibleData["BrushSize"][Random.Range(0, subjectData["BrushSize"].Count)];
-                return GetFeedbackString(brushSizeDescriptors, subject, possible);
+               
+                possible = GetPossible(PaintingData.possibleData["BrushSize"], size);
+                return GetFeedbackString(brushSizeDescriptors, size, possible);
             case 2:
-                subject = subjectData["BrushType"][Random.Range(0, subjectData["BrushType"].Count)];
-                possible = PaintingData.possibleData["BrushType"][Random.Range(0, subjectData["BrushType"].Count)];
-                return GetFeedbackString(colorDescriptors, subject, possible);
+               
+                possible = GetPossible(PaintingData.possibleData["BrushType"], type);
+                return GetFeedbackString(brushTypeDescriptors, type, possible);
 
 
         }
@@ -72,5 +67,17 @@ public class FeedbackGenerator : MonoBehaviour
         }
 
         return string.Format(s, subject);
+    }
+
+    private string GetPossible(List<string> l, string subject)
+    {
+        List<string> possible = new List<string>(l);
+        possible.Remove(subject);
+        return possible[Random.Range(0, possible.Count)];
+    }
+
+    private void Update()
+    {
+
     }
 }

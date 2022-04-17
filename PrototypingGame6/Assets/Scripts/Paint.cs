@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Some of the below code taken from or inspired by https://unity3d.college/2017/07/22/build-unity-multiplayer-drawing-game-using-unet-unity3d/
@@ -29,6 +30,13 @@ public class Paint : MonoBehaviour
     public static bool isEraser;
     public static Actions action;
     int pixelsToAdd;
+
+    [SerializeField]
+    private FeedbackGenerator feedbackGenerator;
+    [SerializeField]
+    private TextMeshProUGUI feedbackText;
+
+    private bool currentlyDrawing;
     private void Start()
     {
         action = Actions.Painting;
@@ -45,6 +53,8 @@ public class Paint : MonoBehaviour
             {"Orange", 0}, //Red dominant AND more than 40 percent green AND less than 80 percent green AND less than 50 percent blue
             {"Pink", 0}     //Red dominant AND more than 40 percent blue OR Blue dominant but more than 83 percent red (green must be the least dominant)
         };
+
+        StartCoroutine(RequestFeedback());  
     }
 
 
@@ -58,6 +68,7 @@ public class Paint : MonoBehaviour
                 Drawing drawing = hit.collider.GetComponent<Drawing>();
                 if (drawing != null)
                 {
+                    currentlyDrawing = true;
                     Renderer rend = hit.transform.GetComponent<Renderer>();
 
                     Texture2D tex = rend.material.mainTexture as Texture2D;
@@ -230,5 +241,36 @@ public class Paint : MonoBehaviour
         }
         Drawing.Texture.Apply();
         return totalPixels;
+    }
+
+    private IEnumerator RequestFeedback()
+    {
+        while(gameObject.activeSelf)
+        {
+            if(currentlyDrawing)
+            {
+                PaintingData.SetScore();
+                 feedbackText.text = feedbackGenerator.GenerateFeedback(ColorToString(), BrushSizeToString(brushSize), brushShape.ToString());
+            }
+            yield return new WaitForSeconds(Random.Range(2,6));
+        }
+    }
+
+    private string BrushSizeToString(int i)
+    {
+        switch(i)
+        {
+            case 10:
+                return "Extra Small";
+            case 20:
+                return "Small";
+            case 30:
+                return "Medium";
+            case 40:
+                return "Large";
+            case 50:
+                return "Extra Large";
+        }
+        return "How could this happen to me";
     }
 }
