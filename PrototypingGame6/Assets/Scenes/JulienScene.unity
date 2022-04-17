@@ -1161,6 +1161,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 908000389049819304, guid: 106aac17cd1ef984fb305ae5ee70a28d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4666667
+      objectReference: {fileID: 0}
     - target: {fileID: 908000389186062222, guid: 106aac17cd1ef984fb305ae5ee70a28d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.7
@@ -1329,6 +1333,10 @@ PrefabInstance:
       propertyPath: m_ColorTemperature
       value: 3179
       objectReference: {fileID: 0}
+    - target: {fileID: 908000390556441919, guid: 106aac17cd1ef984fb305ae5ee70a28d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4666667
+      objectReference: {fileID: 0}
     - target: {fileID: 908000390561625065, guid: 106aac17cd1ef984fb305ae5ee70a28d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.93
@@ -1380,6 +1388,10 @@ PrefabInstance:
     - target: {fileID: 908000390561625067, guid: 106aac17cd1ef984fb305ae5ee70a28d, type: 3}
       propertyPath: m_SpotAngle
       value: 50.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 908000390728847400, guid: 106aac17cd1ef984fb305ae5ee70a28d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.46666667
       objectReference: {fileID: 0}
     - target: {fileID: 908000390728847400, guid: 106aac17cd1ef984fb305ae5ee70a28d, type: 3}
       propertyPath: m_LocalRotation.w
