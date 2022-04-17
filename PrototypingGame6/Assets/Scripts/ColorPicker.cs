@@ -49,6 +49,7 @@ public class ColorPicker : MonoBehaviour
                     SelectedColor = tex.GetPixel((int)pixelUV.x, (int)pixelUV.y);
 
                     selectedColorPreview.material.color = SelectedColor;
+                    Debug.Log(SelectedColor);
                 }
             }
         }

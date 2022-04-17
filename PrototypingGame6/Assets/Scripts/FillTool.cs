@@ -40,9 +40,8 @@ public class FillTool : MonoBehaviour
                         Color changeColor = Drawing.Texture.GetPixel(x, y);
                         while (queue.Count > 0)
                         {
-                            (int, int) top = queue.Peek();
+                            (int, int) top = queue.Dequeue();
                             FillSquare(top.Item1, top.Item2, color, changeColor);
-                            queue.Dequeue();
                         }
                         Drawing.Texture.Apply();
                     }

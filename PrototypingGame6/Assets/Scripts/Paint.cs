@@ -18,7 +18,8 @@ public enum Actions
 {
     Painting,
     Eyedropping,
-    Filling
+    Filling,
+    Erasing
 }
 
 public class Paint : MonoBehaviour
