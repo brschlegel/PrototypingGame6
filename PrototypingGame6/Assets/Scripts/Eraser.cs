@@ -19,6 +19,7 @@ public class Eraser : MonoBehaviour
                 if (eraser != null)
                 {
                     ColorPicker.SelectedColor = Color.white;
+                    ColorPicker.BaseColor = Color.white;
                     selectedColorPreview.material.color = Color.white;
                     Paint.isEraser = true;
                 }

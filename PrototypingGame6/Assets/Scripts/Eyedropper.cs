@@ -31,7 +31,7 @@ public class Eyedropper : MonoBehaviour
                         pixelUV.x *= tex.width;
                         pixelUV.y *= tex.height;
                         ColorPicker.SelectedColor = tex.GetPixel((int)pixelUV.x, (int)pixelUV.y);
-
+                        ColorPicker.BaseColor = ColorPicker.SelectedColor;
                         selectedColorPreview.material.color = ColorPicker.SelectedColor;
                     }
                 }

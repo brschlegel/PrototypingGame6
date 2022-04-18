@@ -8,7 +8,8 @@ using UnityEngine;
 
 public class ColorPicker : MonoBehaviour
 {
-    public static Color SelectedColor { get; set; }
+    public static Color SelectedColor;
+    public static Color BaseColor;
     private bool clicking;
 
     [SerializeField]
@@ -47,9 +48,8 @@ public class ColorPicker : MonoBehaviour
                     pixelUV.x *= tex.width;
                     pixelUV.y *= tex.height;
                     SelectedColor = tex.GetPixel((int)pixelUV.x, (int)pixelUV.y);
-
+                    BaseColor = SelectedColor;
                     selectedColorPreview.material.color = SelectedColor;
-                    Debug.Log(SelectedColor);
                 }
             }
         }
