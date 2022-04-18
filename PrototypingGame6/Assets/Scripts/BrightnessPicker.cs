@@ -53,7 +53,7 @@ public class BrightnessPicker : MonoBehaviour
                     {
                         float gPercentage = (.5f - pixel.g) / .5f;
                         Color color = ColorPicker.BaseColor;
-                        ColorPicker.SelectedColor = new Color(color.r - (color.r * gPercentage), color.g + (color.g * gPercentage), color.b + (color.b * gPercentage));
+                        ColorPicker.SelectedColor = new Color(color.r - (color.r * gPercentage), color.g - (color.g * gPercentage), color.b - (color.b * gPercentage));
                         selectedColorPreview.material.color = ColorPicker.SelectedColor;
                     }
                     //selectedColorPreview.material.color = ColorPicker.SelectedColor;
