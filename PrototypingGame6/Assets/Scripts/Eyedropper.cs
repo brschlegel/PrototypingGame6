@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Eyedropper : MonoBehaviour
+public class Eyedropper : DrawingButtons
 {
     [SerializeField]
     private Renderer selectedColorPreview;
@@ -18,6 +18,7 @@ public class Eyedropper : MonoBehaviour
                 if (eyedropper != null)
                 {
                     Paint.action = Actions.Eyedropping;
+                    buttonGraying.GrayButtons(type, id);
                 }
                 else if(Paint.action == Actions.Eyedropping)
                 {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Eraser : MonoBehaviour
+public class Eraser : DrawingButtons
 {
 
     [SerializeField]
@@ -22,6 +22,8 @@ public class Eraser : MonoBehaviour
                     ColorPicker.BaseColor = Color.white;
                     selectedColorPreview.material.color = Color.white;
                     Paint.isEraser = true;
+                    Paint.action = Actions.Painting;
+                    buttonGraying.GrayButtons(type, id);
                 }
             }
         }

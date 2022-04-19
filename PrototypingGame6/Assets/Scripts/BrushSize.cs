@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrushSize : MonoBehaviour
+public class BrushSize : DrawingButtons
 {
 
     public int brushSize;
@@ -19,6 +19,7 @@ public class BrushSize : MonoBehaviour
                 if (bSize != null && bSize.brushSize == brushSize)
                 {
                     Paint.SetBrushSize(brushSize);
+                    buttonGraying.GrayButtons(type, id);
                 }
             }
         }

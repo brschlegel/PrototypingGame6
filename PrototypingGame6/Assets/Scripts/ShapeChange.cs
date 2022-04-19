@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShapeChange : MonoBehaviour
+public class ShapeChange : DrawingButtons
 {
     public Shape shape;
 
@@ -20,6 +20,7 @@ public class ShapeChange : MonoBehaviour
                     Paint.brushShape = shape;
                     Paint.isEraser = false;
                     Paint.action = Actions.Painting;
+                    buttonGraying.GrayButtons(type, id);
                 }
             }
         }

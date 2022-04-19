@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FillTool : MonoBehaviour
+public class FillTool : DrawingButtons
 {
     private bool[,] visitedBools;
     private Queue<(int, int)> queue;
@@ -18,6 +18,7 @@ public class FillTool : MonoBehaviour
                 if (fillTool != null)
                 {
                     Paint.action = Actions.Filling;
+                    buttonGraying.GrayButtons(type, id);
                 }
                 else if (Paint.action == Actions.Filling)
                 {

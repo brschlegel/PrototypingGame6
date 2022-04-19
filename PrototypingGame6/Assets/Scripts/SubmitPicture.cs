@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class SubmitPicture : MonoBehaviour
+public class SubmitPicture : DrawingButtons
 {
 
     // Update is called once per frame
@@ -19,7 +19,7 @@ public class SubmitPicture : MonoBehaviour
                 {
                     byte[] arr = Drawing.Texture.EncodeToPNG();
                     File.WriteAllBytes(Application.dataPath + "/CrappyDrawing.png", arr);
-                    Debug.Log(Application.dataPath);
+                    buttonGraying.GrayButtons(type, id);
                 }
             }
         }

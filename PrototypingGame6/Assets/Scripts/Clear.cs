@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clear : MonoBehaviour
+public class Clear : DrawingButtons
 {
     // Update is called once per frame
     void Update()
@@ -15,6 +15,7 @@ public class Clear : MonoBehaviour
                 Clear clear = hit.collider.GetComponent<Clear>();
                 if (clear != null)
                 {
+                    buttonGraying.GrayButtons(type, id);
                     Drawing.Clear();
                 }
             }

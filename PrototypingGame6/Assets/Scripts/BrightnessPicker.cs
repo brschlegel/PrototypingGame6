@@ -7,6 +7,8 @@ public class BrightnessPicker : MonoBehaviour
     private bool clicking;
     [SerializeField]
     private Renderer selectedColorPreview;
+    [SerializeField]
+    private Renderer eraser;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -18,6 +20,7 @@ public class BrightnessPicker : MonoBehaviour
                 if (picker != null)
                 {
                     clicking = true;
+                    eraser.material.color = Color.white;
                 }
             }
         }

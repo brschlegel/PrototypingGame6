@@ -14,6 +14,8 @@ public class ColorPicker : MonoBehaviour
 
     [SerializeField]
     private Renderer selectedColorPreview;
+    [SerializeField]
+    private Renderer eraser;
 
     private void Update()
     {
@@ -26,6 +28,7 @@ public class ColorPicker : MonoBehaviour
                 if (picker != null)
                 {
                     clicking = true;
+                    eraser.material.color = Color.white;
                 }
             }
         }
