@@ -6,6 +6,8 @@ public class Eyedropper : DrawingButtons
 {
     [SerializeField]
     private Renderer selectedColorPreview;
+    [SerializeField]
+    private Paint paint;
     // Update is called once per frame
     void Update()
     {
@@ -34,6 +36,7 @@ public class Eyedropper : DrawingButtons
                         ColorPicker.SelectedColor = tex.GetPixel((int)pixelUV.x, (int)pixelUV.y);
                         ColorPicker.BaseColor = ColorPicker.SelectedColor;
                         selectedColorPreview.material.color = ColorPicker.SelectedColor;
+                        paint.ChangeHintColor();
                     }
                 }
             }

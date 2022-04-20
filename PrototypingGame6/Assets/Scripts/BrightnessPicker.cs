@@ -9,6 +9,8 @@ public class BrightnessPicker : MonoBehaviour
     private Renderer selectedColorPreview;
     [SerializeField]
     private Renderer eraser;
+    [SerializeField]
+    private Paint paint;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -51,6 +53,7 @@ public class BrightnessPicker : MonoBehaviour
                         Color color = ColorPicker.BaseColor;
                         ColorPicker.SelectedColor = new Color(color.r + ((1f - color.r) * gPercentage), color.g + ((1f - color.g) * gPercentage), color.b + ((1f - color.b) * gPercentage));
                         selectedColorPreview.material.color = ColorPicker.SelectedColor;
+                        paint.ChangeHintColor();
                     }
                     else if(pixel.g < .5f)
                     {
@@ -58,6 +61,7 @@ public class BrightnessPicker : MonoBehaviour
                         Color color = ColorPicker.BaseColor;
                         ColorPicker.SelectedColor = new Color(color.r - (color.r * gPercentage), color.g - (color.g * gPercentage), color.b - (color.b * gPercentage));
                         selectedColorPreview.material.color = ColorPicker.SelectedColor;
+                        paint.ChangeHintColor();
                     }
                     //selectedColorPreview.material.color = ColorPicker.SelectedColor;
                 }

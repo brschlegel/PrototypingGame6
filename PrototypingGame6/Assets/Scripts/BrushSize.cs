@@ -6,6 +6,8 @@ public class BrushSize : DrawingButtons
 {
 
     public int brushSize;
+    [SerializeField]
+    private Paint paint;
 
     // Update is called once per frame
     void Update()
@@ -19,6 +21,7 @@ public class BrushSize : DrawingButtons
                 if (bSize != null && bSize.brushSize == brushSize)
                 {
                     Paint.SetBrushSize(brushSize);
+                    paint.ChangeHintSize(brushSize);
                     buttonGraying.GrayButtons(type, id);
                 }
             }

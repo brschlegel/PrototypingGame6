@@ -5,6 +5,8 @@ using UnityEngine;
 public class ShapeChange : DrawingButtons
 {
     public Shape shape;
+    [SerializeField]
+    private Paint paint;
 
     // Update is called once per frame
     void Update()
@@ -21,6 +23,7 @@ public class ShapeChange : DrawingButtons
                     Paint.isEraser = false;
                     Paint.action = Actions.Painting;
                     buttonGraying.GrayButtons(type, id);
+                    paint.ChangeHintShape(shape);
                 }
             }
         }

@@ -7,6 +7,8 @@ public class Eraser : DrawingButtons
 
     [SerializeField]
     private Renderer selectedColorPreview;
+    [SerializeField]
+    private Paint paint;
     // Update is called once per frame
     void Update()
     {
@@ -21,6 +23,7 @@ public class Eraser : DrawingButtons
                     ColorPicker.SelectedColor = Color.white;
                     ColorPicker.BaseColor = Color.white;
                     selectedColorPreview.material.color = Color.white;
+                    paint.ChangeHintColor();
                     Paint.isEraser = true;
                     Paint.action = Actions.Painting;
                     buttonGraying.GrayButtons(type, id);

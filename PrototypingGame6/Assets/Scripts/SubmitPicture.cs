@@ -18,7 +18,7 @@ public class SubmitPicture : DrawingButtons
                 if (submit != null)
                 {
                     byte[] arr = Drawing.Texture.EncodeToPNG();
-                    File.WriteAllBytes(Application.dataPath + "/CrappyDrawing.png", arr);
+                    File.WriteAllBytes(Application.dataPath + "/" + Time.fixedTime + ".png", arr);
                     buttonGraying.GrayButtons(type, id);
                 }
             }

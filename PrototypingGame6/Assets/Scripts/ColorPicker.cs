@@ -16,6 +16,8 @@ public class ColorPicker : MonoBehaviour
     private Renderer selectedColorPreview;
     [SerializeField]
     private Renderer eraser;
+    [SerializeField]
+    private Paint paint;
 
     private void Update()
     {
@@ -53,6 +55,7 @@ public class ColorPicker : MonoBehaviour
                     SelectedColor = tex.GetPixel((int)pixelUV.x, (int)pixelUV.y);
                     BaseColor = SelectedColor;
                     selectedColorPreview.material.color = SelectedColor;
+                    paint.ChangeHintColor();
                 }
             }
         }

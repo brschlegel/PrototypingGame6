@@ -30,11 +30,14 @@ public class Paint : MonoBehaviour
     public static bool isEraser;
     public static Actions action;
     int pixelsToAdd;
+    private bool onBoard;
 
     [SerializeField]
     private FeedbackGenerator feedbackGenerator;
     [SerializeField]
     private TextMeshProUGUI feedbackText;
+    [SerializeField]
+    private Transform holdHints;
 
     private bool currentlyDrawing;
     private void Start()
@@ -43,7 +46,7 @@ public class Paint : MonoBehaviour
         SetBrushSize(10);
         colorQuantities = new Dictionary<string, int>()
         {
-            {"LightColor", 0}, //All values above .75
+            {"LightColor", 0}, //All values above .85
             {"Black", 0}, //All values are below .15
             {"Blue", 0},  //Blue dominant and nothing else comes close
             {"Red", 0},   //Red dominant and nothing else comes close
@@ -53,14 +56,83 @@ public class Paint : MonoBehaviour
             {"Orange", 0}, //Red dominant AND more than 40 percent green AND less than 80 percent green AND less than 50 percent blue
             {"Pink", 0}     //Red dominant AND more than 40 percent blue OR Blue dominant but more than 83 percent red (green must be the least dominant)
         };
-
+        ColorPicker.SelectedColor = Color.white;
+        ColorPicker.BaseColor = Color.white;
         StartCoroutine(RequestFeedback());  
     }
 
+    public void ChangeHintColor()
+    {
+        Color color = ColorPicker.SelectedColor;
+        color.a = .7f;
+        for (int c = 0; c < 3; c++)
+        {
+            holdHints.GetChild(c).GetComponent<Renderer>().material.color = color;
+        }
+    }
+
+    public void ChangeHintShape(Shape shape)
+    {
+        int shapeInt = (int)shape;
+        for (int c = 0; c < 3; c++)
+        {
+            if (c == shapeInt)
+            {
+                holdHints.GetChild(c).gameObject.SetActive(true);
+            }
+            else
+            {
+                holdHints.GetChild(c).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void ChangeHintSize(int size)
+    {
+        float newSize = size / 125f;
+        holdHints.localScale = new Vector3(newSize, newSize, 1f);
+    }
 
     private void Update()
     {
-        if (action == Actions.Painting && Input.GetKey(KeyCode.Mouse0))
+        RaycastHit hit;
+        if (action == Actions.Painting && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+        {
+            Drawing drawing = hit.collider.GetComponent<Drawing>();
+            if (drawing != null)
+            {
+                if (!onBoard)
+                {
+                    onBoard = true;
+                    holdHints.gameObject.SetActive(true);
+                }
+                holdHints.transform.position = hit.point - (hit.transform.forward / 10000f);
+                if (Input.GetKey(KeyCode.Mouse0))
+                {
+                    currentlyDrawing = true;
+                    Renderer rend = hit.transform.GetComponent<Renderer>();
+
+                    Texture2D tex = rend.material.mainTexture as Texture2D;
+                    Vector2 pixelUV = hit.textureCoord;
+                    pixelUV.x *= tex.width;
+                    pixelUV.y *= tex.height;
+
+                    pixelsToAdd += BrushAreaWithColor(pixelUV, ColorPicker.SelectedColor, brushSize, brushSizeSquared);
+                }
+            }
+            else if (onBoard)
+            {
+                onBoard = false;
+                holdHints.gameObject.SetActive(false);
+            }
+
+        }
+        else if (onBoard)
+        {
+            onBoard = false;
+            holdHints.gameObject.SetActive(false);
+        }
+        /*if (action == Actions.Painting && Input.GetKey(KeyCode.Mouse0))
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
@@ -79,7 +151,7 @@ public class Paint : MonoBehaviour
                     pixelsToAdd += BrushAreaWithColor(pixelUV, ColorPicker.SelectedColor, brushSize, brushSizeSquared);
                 }
             }
-        }
+        }*/
         /*else if (Input.GetKeyUp(KeyCode.Mouse0) && pixelsToAdd > 0)
         {
             AddToQuantities();
@@ -94,9 +166,13 @@ public class Paint : MonoBehaviour
         {
             return "Black";
         }
-        else if(c.r > .75f && c.g > .75f && c.b > .75f)
+        else if(c.r > .85f && c.g > .85f && c.b > .85f)
         {
-            return "LightColor";
+            return "White";
+        }
+        else if(Mathf.Abs(c.r - c.g) < .06f && Mathf.Abs(c.r - c.b) < .06f && Mathf.Abs(c.g - c.b) < .06f)
+        {
+            return "Gray";
         }
         else
         {
