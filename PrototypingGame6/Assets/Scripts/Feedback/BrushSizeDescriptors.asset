@@ -18,15 +18,22 @@ MonoBehaviour:
   neutralPredicates:
   - The artist's use of {0} brush strokes is amateurish
   - 'Using a {0} sized brush is decent '
+  - Inspirational use of a {0} brush
   negativePredicates:
   - Really? They used a {0} brush?
   - Wow. Uninspired. A {0} brush?
+  - What an awful brush size.
   positiveAfterThought:
   - . Truly the work of an expert
   - . Simply incredible.
+  - . So much more expressive than {1}.
+  - . Juicy!
   neutralAfterThought:
   - ', a {1} brush would help with the overall composition'
   - . {1} strokes would be better.
+  - Meh.
   negativeAfterThought:
   - ' Clearly the right choice was a {1} brush.'
   - ' I shouldn''t even have to say to use a {1} brush'
+  - ' {1} brush! Duh!'
+  - ' Smh my head.'

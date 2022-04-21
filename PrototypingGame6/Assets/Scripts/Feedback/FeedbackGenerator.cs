@@ -23,7 +23,7 @@ public class FeedbackGenerator : MonoBehaviour
     private Descriptors brushTypeDescriptors;
     private void Start()
     {
-
+        Debug.Log(string.Format("ds is formatted much better than {1}", "Fisr", "SMa"));
     }
 
     public void PopulateSubjectData()

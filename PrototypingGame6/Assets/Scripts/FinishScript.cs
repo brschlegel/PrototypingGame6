@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinishScript : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class FinishScript : MonoBehaviour
                 FinishScript submit = hit.collider.GetComponent<FinishScript>();
                 if (submit != null)
                 {
-                    //Your submit shizzle here
+                    SceneManager.LoadScene("SubmitScene");
                 }
             }
         }
