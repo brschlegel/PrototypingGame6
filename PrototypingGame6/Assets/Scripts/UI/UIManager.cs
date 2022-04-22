@@ -54,7 +54,6 @@ public class UIManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Escape))
                     {
                         MenuControl(pauseObjects, MenuState.Pause);
-                        Cursor.visible = true;
                     }
                     break;
                 }
@@ -64,7 +63,6 @@ public class UIManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     MenuControl(pauseObjects, MenuState.Game);
-                    Cursor.visible = false;
                 }
                 break;
             case MenuState.Options:
@@ -72,7 +70,6 @@ public class UIManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     MenuControl(optionObjects, MenuState.Game);
-                    Cursor.visible = false;
                 }
                 break;
             // If somehow not in Game state, Menu State, or Options state, assume it is menu and can go back to game state
@@ -81,7 +78,6 @@ public class UIManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     MenuControl(pauseObjects, MenuState.Game);
-                    Cursor.visible = false;
                 }
                 break;
         }
