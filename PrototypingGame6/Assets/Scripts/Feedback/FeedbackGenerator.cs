@@ -21,9 +21,12 @@ public class FeedbackGenerator : MonoBehaviour
     private Descriptors brushSizeDescriptors;
     [SerializeField]
     private Descriptors brushTypeDescriptors;
+
+    [SerializeField]
+    AlienShuffler alienShuffler;
     private void Start()
     {
-        Debug.Log(string.Format("ds is formatted much better than {1}", "Fisr", "SMa"));
+       
     }
 
     public void PopulateSubjectData()
@@ -34,37 +37,25 @@ public class FeedbackGenerator : MonoBehaviour
     public string GenerateFeedback(string color, string size, string type)
     {
         int rand = Random.Range(0, 3);
-        string possible;
+       
         switch(rand)
         {
             case 0:
-               
-                possible = GetPossible(PaintingData.possibleData["Color"], color);
-                return GetFeedbackString(colorDescriptors, color, possible);
-                
+                return GetFeedbackString(colorDescriptors, color);
             case 1:
-               
-                possible = GetPossible(PaintingData.possibleData["BrushSize"], size);
-                return GetFeedbackString(brushSizeDescriptors, size, possible);
+                return GetFeedbackString(brushSizeDescriptors, size);
             case 2:
-               
-                possible = GetPossible(PaintingData.possibleData["BrushType"], type);
-                return GetFeedbackString(brushTypeDescriptors, type, possible);
-
-
+                return GetFeedbackString(brushTypeDescriptors, type);
         }
         return "How did we get here?";
     }
 
-    private string GetFeedbackString(Descriptors d, string subject, string possible)
+    private string GetFeedbackString(Descriptors d, string subject)
     {
-        int relativeScore = PaintingData.score + Random.Range(-scoreVariance, scoreVariance);   
+        Alien a = alienShuffler.aliens[Random.Range(0, 3)];
+        int relativeScore = a.GetOpinion(subject);
+        alienShuffler.SetPointer(a);
         string s = d.GetPredicate(relativeScore);
-        if(Random.value < afterThoughtChance)
-        {
-            s += d.GetAfterThought(relativeScore);
-            return string.Format(s, subject, possible);
-        }
 
         return string.Format(s, subject);
     }

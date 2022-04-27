@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
+public struct ResultData
+{
+    public Sprite sprite;
+    public int score;
+}
 public class Results : MonoBehaviour
 {
+    public static List<ResultData> results = new List<ResultData>();   
     [SerializeField]
     List<GameObject> aliens;
     [SerializeField]
@@ -15,13 +22,14 @@ public class Results : MonoBehaviour
     {
         StartCoroutine(ShowResults());
         int sum = 0;
-        foreach(GameObject go in aliens)
+        for(int i = 0; i < aliens.Count; i++)   
         {
-            int score = Random.Range(0, 101);
-            go.GetComponentInChildren<TextMeshProUGUI>().text = score.ToString();
+            int score = results[i].score;
+            aliens[i].GetComponentInChildren<TextMeshProUGUI>().text = score.ToString();
+            aliens[i].transform.Find("Alien").GetComponent<Image>().sprite = results[i].sprite;
             sum += score;
         }
-        finalScore.GetComponentInChildren<TextMeshProUGUI>().text = (sum/8).ToString(); 
+        finalScore.GetComponentInChildren<TextMeshProUGUI>().text = (sum/aliens.Count).ToString(); 
     }
 
     // Update is called once per frame
@@ -32,7 +40,7 @@ public class Results : MonoBehaviour
 
     public IEnumerator ShowResults()
     {
-        for(int i = 0; i < 8; i++)
+        for(int i = 0; i < aliens.Count; i++)
         {
             aliens[i].SetActive(true);
             yield return new WaitForSeconds(.3f);
