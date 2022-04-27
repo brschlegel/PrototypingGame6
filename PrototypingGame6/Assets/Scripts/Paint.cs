@@ -29,6 +29,7 @@ public class Paint : MonoBehaviour
     public static Dictionary<string, int> colorQuantities;
     public static bool isEraser;
     public static Actions action;
+    public static Stack<UndoAction> actionStack;
     int pixelsToAdd;
     private bool onBoard;
 
@@ -42,6 +43,7 @@ public class Paint : MonoBehaviour
     private bool currentlyDrawing;
     private void Start()
     {
+        actionStack = new Stack<UndoAction>();
         action = Actions.Painting;
         SetBrushSize(10);
         colorQuantities = new Dictionary<string, int>()
