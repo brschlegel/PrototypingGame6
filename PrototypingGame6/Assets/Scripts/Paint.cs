@@ -39,6 +39,8 @@ public class Paint : MonoBehaviour
     private TextMeshProUGUI feedbackText;
     [SerializeField]
     private Transform holdHints;
+    [SerializeField]
+    private AlienShuffler alienShuffler;
 
     private bool currentlyDrawing;
     private void Start()
@@ -97,6 +99,7 @@ public class Paint : MonoBehaviour
 
     private void Update()
     {
+        currentlyDrawing = false;
         RaycastHit hit;
         if (action == Actions.Painting && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
         {
@@ -329,8 +332,13 @@ public class Paint : MonoBehaviour
             {
                 PaintingData.SetScore();
                  feedbackText.text = feedbackGenerator.GenerateFeedback(ColorToString(), BrushSizeToString(brushSize), brushShape.ToString());
+                foreach(Alien a in alienShuffler.aliens)
+                {
+                    a.UpdateScore(ColorToString(), BrushSizeToString(brushSize), brushShape.ToString());
+                }
             }
             yield return new WaitForSeconds(Random.Range(2,6));
+
         }
     }
 

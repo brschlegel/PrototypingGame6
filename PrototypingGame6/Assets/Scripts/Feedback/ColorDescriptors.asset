@@ -13,20 +13,27 @@ MonoBehaviour:
   m_Name: ColorDescriptors
   m_EditorClassIdentifier: 
   positivePredicates:
-  - I love their use of {0}
+  - I love their use of {0},
   - Their color choice, particularly the {0}, is impeccable
+  - '{0} :D,'
+  - The {0} is delightful!
   neutralPredicates:
   - The {0} was alright choice
   - Their use of {0} is weighing down a decent piece
   negativePredicates:
   - Using {0} was a questionable choice
   - The {0} was just terrible
+  - '{0} is sus!'
+  - There ain't no way...
   positiveAfterThought:
   - ', much better than {1}'
   - ', rather than {1}'
+  - ' Simply Divine!'
   neutralAfterThought:
   - ', I might have used {1}'
   - ', could have gone with {1}'
   negativeAfterThought:
-  - ', anyone with a brain would have used {1}'
-  - ', {1} is a much better choice'
+  - ' anyone with a brain would have used {1}'
+  - ' {1} is a much better choice'
+  - ' Even my dog would have gone with {1}'
+  - ' Yikes.'

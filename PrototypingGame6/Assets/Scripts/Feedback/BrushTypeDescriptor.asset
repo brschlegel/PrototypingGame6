@@ -15,18 +15,27 @@ MonoBehaviour:
   positivePredicates:
   - Ah yes! A {0} brush here is inspired!
   - Good gravy that {0} brush is looking great!
+  - 'The {0} brush is reminiscent of Monet''s early work '
+  - Its as if the {0} is an extension of their arm!
   neutralPredicates:
   - A {0} brush is an odd choice...
   - Hmm, ok, a {0}.
+  - I suppose a {0} brush works here...
   negativePredicates:
   - Really? A {0} brush? In this economy?
   - No No NO! Using a {0} brush here is plain stupid
+  - The {0} brush is so 10 years ago!
+  - Its as if the {0} brush is an extension of their big toe.
   positiveAfterThought:
   - ' So much better than a {1}.'
   - ' Wildly better than {1}'
+  - I could never aspire to this! I'll never paint agian!
   neutralAfterThought:
   - ' I would have used a {1}.'
   - ' Why not a {1}?'
+  - ' Good enough.'
   negativeAfterThought:
+  - Looks like something Sean would do.
   - ' Use a {1} brush.'
   - ' Even amatuers would know to use a {1} brush.'
+  - ' 0/10. Not enough {1} brush.'
