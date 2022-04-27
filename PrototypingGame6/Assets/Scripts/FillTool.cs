@@ -39,12 +39,15 @@ public class FillTool : DrawingButtons
                         visitedBools[x, y] = true;
                         Color color = ColorPicker.SelectedColor;
                         Color changeColor = Drawing.Texture.GetPixel(x, y);
+                        List<(int, int, Color)> colorList = new List<(int, int, Color)>();
                         while (queue.Count > 0)
                         {
                             (int, int) top = queue.Dequeue();
+                            colorList.Add((top.Item1, top.Item2, changeColor));
                             FillSquare(top.Item1, top.Item2, color, changeColor);
                         }
                         Drawing.Texture.Apply();
+                        Paint.actionStack.Push(colorList);
                     }
                 }
             }

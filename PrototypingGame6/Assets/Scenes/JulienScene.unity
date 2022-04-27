@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 4.578125, g: 4.578125, b: 4.578125, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1270,7 +1270,6 @@ Transform:
   - {fileID: 1134836094}
   - {fileID: 1440668745}
   - {fileID: 1481616937}
-  - {fileID: 984141300}
   m_Father: {fileID: 656693187}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6225,6 +6224,7 @@ Transform:
   - {fileID: 115875562}
   - {fileID: 569173327}
   - {fileID: 1872296129}
+  - {fileID: 984141300}
   - {fileID: 1784508373}
   m_Father: {fileID: 1529750149}
   m_RootOrder: 7
@@ -6246,6 +6246,7 @@ MonoBehaviour:
   paintTools: {fileID: 115875562}
   clearRend: {fileID: 569173330}
   submitRend: {fileID: 1872296132}
+  undoRend: {fileID: 984141303}
 --- !u!224 &664678074 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1697730423195757701, guid: e131914413731a34bb2ce93d3f3c5091, type: 3}
@@ -8852,11 +8853,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984141299}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: -2.2, z: 10}
+  m_LocalPosition: {x: -2, y: -2.2000003, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 115875562}
-  m_RootOrder: 6
+  m_Father: {fileID: 656693187}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984141301
 MonoBehaviour:
@@ -8870,6 +8871,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a846033127062f42bb68236ee55b989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 4
+  type: 4
+  buttonGraying: {fileID: 0}
 --- !u!64 &984141302
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16009,7 +16013,7 @@ Transform:
   m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 656693187}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1784508374
 MonoBehaviour:

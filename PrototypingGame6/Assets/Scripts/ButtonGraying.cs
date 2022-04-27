@@ -18,6 +18,7 @@ public class ButtonGraying : MonoBehaviour
     public Transform paintTools;
     public Renderer clearRend;
     public Renderer submitRend;
+    public Renderer undoRend;
 
     public void GrayButtons(ButtonType type, int id)
     {
@@ -79,9 +80,13 @@ public class ButtonGraying : MonoBehaviour
                 {
                     clearRend.material.color = clickShade;
                 }
-                else
+                else if(id == 3)
                 {
                     submitRend.material.color = clickShade;
+                }
+                else
+                {
+                    undoRend.material.color = clickShade;
                 }
                 Invoke("ReWhite", .2f);
                 break;
@@ -94,5 +99,6 @@ public class ButtonGraying : MonoBehaviour
     {
         clearRend.material.color = Color.white;
         submitRend.material.color = Color.white;
+        undoRend.material.color = Color.white;
     }
 }

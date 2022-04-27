@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 /// <summary>
-/// Some of the below code taken from or inspired by https://unity3d.college/2017/07/22/build-unity-multiplayer-drawing-game-using-unet-unity3d/
+/// Some of the below code inspired by https://unity3d.college/2017/07/22/build-unity-multiplayer-drawing-game-using-unet-unity3d/
 /// </summary>
 
 public enum Shape
@@ -29,9 +29,10 @@ public class Paint : MonoBehaviour
     public static Dictionary<string, int> colorQuantities;
     public static bool isEraser;
     public static Actions action;
-    public static Stack<UndoAction> actionStack;
+    public static Stack<List<(int, int, Color)>> actionStack;
     int pixelsToAdd;
     private bool onBoard;
+    private List<(int, int, Color)> colorList;
 
     [SerializeField]
     private FeedbackGenerator feedbackGenerator;
@@ -45,7 +46,8 @@ public class Paint : MonoBehaviour
     private bool currentlyDrawing;
     private void Start()
     {
-        actionStack = new Stack<UndoAction>();
+        actionStack = new Stack<List<(int, int, Color)>>();
+        colorList = new List<(int, int, Color)>();
         action = Actions.Painting;
         SetBrushSize(10);
         colorQuantities = new Dictionary<string, int>()
@@ -136,6 +138,11 @@ public class Paint : MonoBehaviour
         {
             onBoard = false;
             holdHints.gameObject.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0) && colorList.Count > 0)
+        {
+            actionStack.Push(new List<(int, int, Color)>(colorList));
+            colorList.Clear();
         }
         /*if (action == Actions.Painting && Input.GetKey(KeyCode.Mouse0))
         {
@@ -259,8 +266,13 @@ public class Paint : MonoBehaviour
                             int newY = (int)pixelUV.y + y;
                             if (newY > -1 && newY < 2000)
                             {
-                                Drawing.Texture.SetPixel(newX, newY, color);
-                                totalPixels++;
+                                Color colorChange = Drawing.Texture.GetPixel(newX, newY);
+                                if (colorChange != color)
+                                {
+                                    colorList.Add((newX, newY, colorChange));
+                                    Drawing.Texture.SetPixel(newX, newY, color);
+                                    totalPixels++;
+                                }
                             }
                         }
                     }
@@ -276,8 +288,13 @@ public class Paint : MonoBehaviour
                             int newY = (int)pixelUV.y + y;
                             if (newY > -1 && newY < 2001)
                             {
-                                Drawing.Texture.SetPixel(newX, newY, color);
-                                totalPixels++;
+                                Color colorChange = Drawing.Texture.GetPixel(newX, newY);
+                                if (colorChange != color)
+                                {
+                                    colorList.Add((newX, newY, colorChange));
+                                    Drawing.Texture.SetPixel(newX, newY, color);
+                                    totalPixels++;
+                                }
                             }
                         }
                     }
@@ -292,8 +309,13 @@ public class Paint : MonoBehaviour
                             int newY = (int)pixelUV.y + y;
                             if (newY > -1 && newY < 2001)
                             {
-                                Drawing.Texture.SetPixel(newX, newY, color);
-                                totalPixels++;
+                                Color colorChange = Drawing.Texture.GetPixel(newX, newY);
+                                if (colorChange != color)
+                                {
+                                    colorList.Add((newX, newY, colorChange));
+                                    Drawing.Texture.SetPixel(newX, newY, color);
+                                    totalPixels++;
+                                }
                             }
                         }
                     }
@@ -310,8 +332,13 @@ public class Paint : MonoBehaviour
                             int newY = (int)pixelUV.y + y;
                             if (newY > -1 && newY < 2000)
                             {
-                                Drawing.Texture.SetPixel(newX, newY, color);
-                                totalPixels++;
+                                Color colorChange = Drawing.Texture.GetPixel(newX, newY);
+                                if (colorChange != color)
+                                {
+                                    colorList.Add((newX, newY, colorChange));
+                                    Drawing.Texture.SetPixel(newX, newY, color);
+                                    totalPixels++;
+                                }
                             }
                         }
                     }
