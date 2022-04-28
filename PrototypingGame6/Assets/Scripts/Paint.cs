@@ -30,7 +30,7 @@ public class Paint : MonoBehaviour
     public static bool isEraser;
     public static Actions action;
     public static Stack<List<(int, int, Color)>> actionStack;
-    int pixelsToAdd;
+    private int pixelsToAdd;
     private bool onBoard;
     private List<(int, int, Color)> colorList;
 
@@ -143,6 +143,7 @@ public class Paint : MonoBehaviour
         {
             actionStack.Push(new List<(int, int, Color)>(colorList));
             colorList.Clear();
+            pixelsToAdd = 0;
         }
         /*if (action == Actions.Painting && Input.GetKey(KeyCode.Mouse0))
         {
@@ -267,7 +268,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2000)
                             {
                                 Color colorChange = Drawing.Texture.GetPixel(newX, newY);
-                                if (colorChange != color)
+                                if (!ColorEquals(color, colorChange))
                                 {
                                     colorList.Add((newX, newY, colorChange));
                                     Drawing.Texture.SetPixel(newX, newY, color);
@@ -289,7 +290,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2001)
                             {
                                 Color colorChange = Drawing.Texture.GetPixel(newX, newY);
-                                if (colorChange != color)
+                                if (!ColorEquals(color, colorChange))
                                 {
                                     colorList.Add((newX, newY, colorChange));
                                     Drawing.Texture.SetPixel(newX, newY, color);
@@ -310,7 +311,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2001)
                             {
                                 Color colorChange = Drawing.Texture.GetPixel(newX, newY);
-                                if (colorChange != color)
+                                if (!ColorEquals(color, colorChange))
                                 {
                                     colorList.Add((newX, newY, colorChange));
                                     Drawing.Texture.SetPixel(newX, newY, color);
@@ -333,7 +334,7 @@ public class Paint : MonoBehaviour
                             if (newY > -1 && newY < 2000)
                             {
                                 Color colorChange = Drawing.Texture.GetPixel(newX, newY);
-                                if (colorChange != color)
+                                if (!ColorEquals(color, colorChange))
                                 {
                                     colorList.Add((newX, newY, colorChange));
                                     Drawing.Texture.SetPixel(newX, newY, color);
@@ -349,6 +350,15 @@ public class Paint : MonoBehaviour
         }
         Drawing.Texture.Apply();
         return totalPixels;
+    }
+
+    private bool ColorEquals(Color a, Color b)
+    {
+        if(Mathf.Abs(a.r - b.r) < .05f && Mathf.Abs(a.g - b.g) < .05f && Mathf.Abs(a.b - b.b) < .05f)
+        {
+            return true;
+        }
+        return false;
     }
 
     private IEnumerator RequestFeedback()
