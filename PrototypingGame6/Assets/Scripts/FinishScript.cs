@@ -18,9 +18,10 @@ public class FinishScript : MonoBehaviour
                 FinishScript submit = hit.collider.GetComponent<FinishScript>();
                 if (submit != null)
                 {
-
-                    for(int i = 0; i < alienShuffler.aliens.Count; i++)
+                    Results.results = new List<ResultData>();
+                    for (int i = 0; i < alienShuffler.aliens.Count; i++)
                     {
+                     
                         ResultData r;
                         r.sprite = alienShuffler.aliens[i].GetComponent<Image>().sprite;
                         r.score = alienShuffler.aliens[i].score;

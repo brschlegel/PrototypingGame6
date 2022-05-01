@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 
 public struct ResultData
 {
@@ -11,7 +12,7 @@ public struct ResultData
 }
 public class Results : MonoBehaviour
 {
-    public static List<ResultData> results = new List<ResultData>();   
+    public static List<ResultData> results;   
     [SerializeField]
     List<GameObject> aliens;
     [SerializeField]
@@ -47,5 +48,26 @@ public class Results : MonoBehaviour
         }
         finalScore.SetActive(true);
         goBackButton.SetActive(true);
+    }
+
+    public void WriteResults()
+    {
+        using (StreamWriter sw = File.AppendText(Application.dataPath + "/" + "results.csv"))
+        {
+            for (int i = 0; i < results.Count; i++)
+            {
+
+                if (i != results.Count - 1)
+                {
+                    sw.Write(results[i].score);
+                    sw.Write(',');
+
+                }
+                else
+                {
+                    sw.WriteLine(results[i].score);
+                }
+            }
+        }
     }
 }
